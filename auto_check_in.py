@@ -63,11 +63,16 @@ driver.hide_keyboard()
 # delay 3 seconds
 time.sleep(3)
 
-el = driver.find_element(
-    AppiumBy.ANDROID_UIAUTOMATOR,
-    'new UiSelector().className("android.widget.Button").index(5)'
-)
-el.click()
+def safe_click(by, value):
+    try:
+        el = driver.find_element(by, value)
+        el.click()
+        return True
+    except:
+        return False
+
+safe_click("accessibility id", "上班")
+safe_click("accessibility id", "下班")
 
 print(f"[{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}] ✅ Successfully checked in!")
 
